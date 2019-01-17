@@ -9,11 +9,13 @@
 import UIKit
 
 class TaxiOrdersTableViewCell: UITableViewCell {
+    
     var type : String? {
         didSet {
             type_label.text = type ?? "Такси"
         }
     }
+    
     var AcceptButton : UIButton = UIButton()
   private  var AccepLabel : MainLabel = MainLabel()
     var DistanLabel : MainLabel = MainLabel()
@@ -25,12 +27,13 @@ class TaxiOrdersTableViewCell: UITableViewCell {
     var price : MainLabel = MainLabel()
     var bottomView : UIView = UIView()
     var bot : UIView = UIView()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addview()
         anchors()
-        
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,14 +65,13 @@ class TaxiOrdersTableViewCell: UITableViewCell {
         price.textAlignment = .left
         price.textColor = maincolor
         DistanLabel.textColor = UIColor.red
-        let center_price = price.centerYAnchor.constraint(equalTo: from.centerYAnchor)
         let center_distance = DistanLabel.centerYAnchor.constraint(equalTo: to.centerYAnchor)
         NSLayoutConstraint.activate([center_distance])
         from.numberOfLines = 3
         to.numberOfLines = 3
-        from.text = "place1"
-        to.text = "place2"
+
     }
+    
     weak var viewModel : TableViewCellTaxiOrdersModelType? {
         willSet(viewModel) {
             guard let viewModel = viewModel else {
@@ -91,7 +93,7 @@ class TaxiOrdersTableViewCell: UITableViewCell {
                 break
             }
          
-          
+//          Геокодить дистанцию
             GetDistance.getinfo(from_lat: viewModel.from_lat!, from_long: viewModel.from_long!, to_lat: viewModel.to_lat!, to_long: viewModel.to_long!) { (info) in
                 for i in info.rows! {
                     for a in i.elements! {
@@ -100,12 +102,12 @@ class TaxiOrdersTableViewCell: UITableViewCell {
                     }
                 }
             }
-            
-            getfromgeo.get(lat: viewModel.from_lat!, long: viewModel.from_long!) { (palce) in
-                self.to.text = palce
+//             Геокодить название локации
+            getfromgeo.get(lat: viewModel.from_lat!, long: viewModel.from_long!) { (place1) in
+                self.to.text = place1
             }
-            getfromgeo.get(lat: viewModel.to_lat!, long: viewModel.to_long!) { (place) in
-                self.from.text = place
+            getfromgeo.get(lat: viewModel.to_lat!, long: viewModel.to_long!) { (place2) in
+                self.from.text = place2
             }
             price.text = viewModel.price
             

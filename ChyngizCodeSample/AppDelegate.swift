@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import GoogleMaps
+import GooglePlaces
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
         // Override point for customization after application launch.
+        GMSPlacesClient.provideAPIKey("AIzaSyAuSB9DXj45y7Ln8x45gTDOv-DhaFBm7Ys")
+        GMSServices.provideAPIKey("AIzaSyAuSB9DXj45y7Ln8x45gTDOv-DhaFBm7Ys")
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffset(horizontal: -1000, vertical: 0), for:UIBarMetrics.default)
+        UINavigationBar.appearance().tintColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        UINavigationBar.appearance().backgroundColor = UIColor(displayP3Red: 104/255, green: 205/255, blue: 179/255, alpha: 1.0)
+        window?.rootViewController = UINavigationController.init(rootViewController: TaxiOrdersTableViewController())
+
         return true
     }
 

@@ -13,7 +13,7 @@ import SwiftyJSON
 class getcharorders {
     class func get(url:String,completion:@escaping(_ order:[ChatOrders]?)->()) {
         let url = baseurl + url
-        let params = ["token":APItoken.getToken()!]
+        let params = ["token":"IEvOtJ_RKMtxyDCsi0pVzG5PBXTzr6P9"]
         Alamofire.request(url, method: .post, parameters: params, encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             if response.data != nil {
                 switch response.result {
